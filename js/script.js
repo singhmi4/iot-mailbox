@@ -81,21 +81,34 @@ $( document ).ready(function() {
 	}
 	
 	const mailbox = new IOTMailbox(undefined, signalCallback);
-	
+
+	// Disable the stop monitoring and reset buttons onload
+	$( '#stop' ).prop('disabled', true);
+	$( '#reset' ).prop('disabled', true);
+
 	// Clears default value on form click
 	$( '#interval-input' ).on('click', function() {
 		$(this).val('');
 	});
 
 	$( '#start' ).on('click', function() {
+		
+		$(this).prop('disabled', true);
+		$( '#stop' ).prop('disabled', false);
+		$( '#reset' ).prop('disabled', false);
+
 		const interval = $( '#interval-input' ).val() * 1000;
 		mailbox.signalInterval = interval === '' ? 500 : interval;
 		console.log(`'New Interval: ${mailbox.signalInterval}`)
+		
 		mailbox.startMonitoring();
 		$( ".list-group" ).append( '<li class="list-group-item">Starting monitoring of mailbox...</li>' );
 	});
 
 	$( '#stop' ).on('click', function() {
+		$(this).prop('disabled', true);
+		$('#start').prop('disabled', false);
+		
 		mailbox.stopMonitoring();
 		$( '#notification' ).removeClass('alert-danger');
 		$( '#notification' ).removeClass('alert-success');
@@ -105,6 +118,7 @@ $( document ).ready(function() {
 	});
 
 	$( '#reset' ).on('click', function() {
+		$(this).prop('disabled', true);
 		mailbox.stopMonitoring();
 		$( '#notification' ).text('Not monitoring mailbox...');
 		$( '#notification' ).removeClass('alert-danger');
