@@ -68,6 +68,7 @@ $( document ).ready(function() {
 			$( '#notification' ).removeClass('alert-danger');
 			$( '#notification' ).removeClass('alert-success');
 			$( '#notification' ).addClass('alert-success');
+
 		} else {
 			console.log(`Callback Light Level: ${lightLevel}`)
 			$( '#notification' ).text('Mailbox is closed');
@@ -75,12 +76,15 @@ $( document ).ready(function() {
 			$( '#notification' ).removeClass('alert-success');
 			$( '#notification' ).addClass('alert-danger');
 		}
+		
+		$( ".list-group" ).append( `<li class="list-group-item">Light Level: ${lightLevel}</li>` );
 	}
 
 	const mailbox = new IOTMailbox(undefined, signalCallback);
 
 	$( '#start' ).on('click', function() {
 		mailbox.startMonitoring();
+		$( ".list-group" ).append( '<li class="list-group-item">Starting monitoring of mailbox...</li>' );
 	});
 
 	$( '#stop' ).on('click', function() {
@@ -89,6 +93,16 @@ $( document ).ready(function() {
 		$( '#notification' ).removeClass('alert-success');
 		$( '#notification' ).addClass('alert-dark');
 		$( '#notification' ).text('Not monitoring mailbox...');
+		$( ".list-group" ).append( '<li class="list-group-item">Not monitoring mailbox...</li>' );
 	});
+
+	$( '#reset' ).on('click', function() {
+		mailbox.stopMonitoring();
+		$( '#notification' ).text('Not monitoring mailbox...');
+		$( '#notification' ).removeClass('alert-danger');
+		$( '#notification' ).removeClass('alert-success');
+		$( '#notification' ).addClass('alert-dark');
+		$( '.list-group' ).empty();
+	})
 });
 
