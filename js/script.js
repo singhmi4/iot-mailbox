@@ -79,10 +79,18 @@ $( document ).ready(function() {
 		
 		$( ".list-group" ).append( `<li class="list-group-item">Light Level: ${lightLevel}</li>` );
 	}
-
+	
 	const mailbox = new IOTMailbox(undefined, signalCallback);
+	
+	// Clears default value on form click
+	$( '#interval-input' ).on('click', function() {
+		$(this).val('');
+	});
 
 	$( '#start' ).on('click', function() {
+		const interval = $( '#interval-input' ).val() * 1000;
+		mailbox.signalInterval = interval === '' ? 500 : interval;
+		console.log(`'New Interval: ${mailbox.signalInterval}`)
 		mailbox.startMonitoring();
 		$( ".list-group" ).append( '<li class="list-group-item">Starting monitoring of mailbox...</li>' );
 	});
