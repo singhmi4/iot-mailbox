@@ -60,7 +60,6 @@ $( document ).ready(function() {
 
 	function signalCallback(lightLevel) {
 		console.log('callback worked');
-		$( '#notification' ).removeClass('alert-dark');
 
 		if (lightLevel >= 0) {
 			console.log(`Callback Light Level: ${lightLevel}`)
@@ -93,6 +92,12 @@ $( document ).ready(function() {
 
 	$( '#start' ).on('click', function() {
 		
+		$( '#notification' ).removeClass('alert-dark');
+		$( '#notification' ).addClass('alert-primary');
+		$( '#notification' ).text('Monitoring mailbox...');
+		
+		$( ".list-group" ).append( '<li class="list-group-item">Starting monitoring of mailbox...</li>' );
+		
 		$(this).prop('disabled', true);
 		$( '#stop' ).prop('disabled', false);
 		$( '#reset' ).prop('disabled', false);
@@ -102,7 +107,7 @@ $( document ).ready(function() {
 		console.log(`'New Interval: ${mailbox.signalInterval}`)
 		
 		mailbox.startMonitoring();
-		$( ".list-group" ).append( '<li class="list-group-item">Starting monitoring of mailbox...</li>' );
+		
 	});
 
 	$( '#stop' ).on('click', function() {
