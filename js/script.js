@@ -53,7 +53,7 @@ $( document ).ready(function() {
 		  ? Math.random().toFixed(2) * -1 
 		  : Math.random().toFixed(2);
 		// console.log(`Mailbox state changed - lightLevel: ${lightLevel}`);
-		this.signalCallback(this.lightLevel);
+		this.signalCallback(lightLevel);
 		this.lastLightLevel = lightLevel;
 	  }
 	};
@@ -85,6 +85,10 @@ $( document ).ready(function() {
 
 	$( '#stop' ).on('click', function() {
 		mailbox.stopMonitoring();
+		$( '#notification' ).removeClass('alert-danger');
+		$( '#notification' ).removeClass('alert-success');
+		$( '#notification' ).addClass('alert-dark');
+		$( '#notification' ).text('Not monitoring mailbox...');
 	});
 });
 
