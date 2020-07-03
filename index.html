@@ -13,6 +13,12 @@
   <body>
 	<div class="container">
 		<h1 class="text-center mt-5">IoT Mailbox</h1>
+		<div class="form-group row my-3">
+			<div class="col-md-4 mx-auto text-center">
+				<label for="interval-input" id="interval-label">Specify Monitoring Interval in Seconds</label>
+		  		<input type="number" id="interval-input" class="form-control" placeholder="1" min="0" step="1" aria-label="Interval" aria-describedby="interval-label">
+			</div>
+		</div>
 		<div class="row text-center">
 			<div class="col-md">
 				<button id="start" type="button" class="btn btn-success btn-lg mb-1">Start Monitoring</button>
