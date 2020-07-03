@@ -52,10 +52,39 @@ $( document ).ready(function() {
 		const lightLevel = this.lastLightLevel >= 0 
 		  ? Math.random().toFixed(2) * -1 
 		  : Math.random().toFixed(2);
-		console.log(`Mailbox state changed - lightLevel: ${lightLevel}`);
+		// console.log(`Mailbox state changed - lightLevel: ${lightLevel}`);
 		this.signalCallback(this.lightLevel);
 		this.lastLightLevel = lightLevel;
 	  }
 	};
+
+	function signalCallback(lightLevel) {
+		console.log('callback worked');
+		$( '#notification' ).removeClass('alert-dark');
+
+		if (lightLevel >= 0) {
+			console.log(`Callback Light Level: ${lightLevel}`)
+			$( '#notification' ).text('Mailbox is open');
+			$( '#notification' ).removeClass('alert-danger');
+			$( '#notification' ).removeClass('alert-success');
+			$( '#notification' ).addClass('alert-success');
+		} else {
+			console.log(`Callback Light Level: ${lightLevel}`)
+			$( '#notification' ).text('Mailbox is closed');
+			$( '#notification' ).removeClass('alert-danger');
+			$( '#notification' ).removeClass('alert-success');
+			$( '#notification' ).addClass('alert-danger');
+		}
+	}
+
+	const mailbox = new IOTMailbox(undefined, signalCallback);
+
+	$( '#start' ).on('click', function() {
+		mailbox.startMonitoring();
+	});
+
+	$( '#stop' ).on('click', function() {
+		mailbox.stopMonitoring();
+	});
 });
 
